@@ -181,13 +181,13 @@
   "moduleExtensions": {
     "//:extensions.bzl%cpython_toolchain": {
       "general": {
-        "bzlTransitiveDigest": "pY2o0z4Rdf9LxmICYE4yqp0qkzBkNfF6XGOcVhHxek0=",
+        "bzlTransitiveDigest": "k0Gpoq6uVYQ8VegmMC645p6hoUKPFGCyP6BALWs7c3M=",
         "usagesDigest": "9co22w2MWbX5IHxs6vv9CLw9+BsZO3/mg2sYdSqQ4XI=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
-          "cpython3_12": {
+          "cpython3_12_build": {
             "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
             "attributes": {
               "urls": [
@@ -195,6 +195,12 @@
               ],
               "build_file": "@@//:BUILD.cpython3_12",
               "strip_prefix": "Python-3.12.10"
+            }
+          },
+          "cpython3_12": {
+            "repoRuleId": "@@//:extensions.bzl%_toolchain_shim",
+            "attributes": {
+              "cpython_build_name": "cpython3_12_build"
             }
           }
         },

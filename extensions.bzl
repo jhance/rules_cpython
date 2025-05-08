@@ -15,6 +15,37 @@ def repository_name_for_python_version(version):
     return "cpython{}_{}".format(major, minor)
 
 
+def _toolchain_shim_impl(ctx):
+    build_file_content = """ # toolchain shim for @{cpython_build_name}
+toolchain(
+    name = "toolchain",
+    toolchain = "@{cpython_build_name}//:py_runtime_pair",
+    toolchain_type = "@rules_python//python:toolchain_type",
+    target_settings = ["@rules_cpython//:bootstrap_disabled"],
+)
+
+toolchain(
+    name = "cc_toolchain",
+    toolchain = "@{cpython_build_name}//:py_cc_toolchain",
+    toolchain_type = "@rules_python//python/cc:toolchain_type",
+    target_settings = ["@rules_cpython//:bootstrap_disabled"],
+)
+""".format(cpython_build_name=ctx.attr.cpython_build_name)
+
+    ctx.file(
+        "BUILD.bazel",
+        content = build_file_content,
+    )
+
+
+_toolchain_shim = repository_rule(
+    implementation = _toolchain_shim_impl,
+    attrs = {
+        "cpython_build_name": attr.string(),
+    },
+)
+
+
 def _cpython_toolchain(ctx):
     for module in ctx.modules:
         for toolchain in module.tags.declare:
@@ -22,11 +53,17 @@ def _cpython_toolchain(ctx):
             build_file = "BUILD." + cpython_name
 
             http_archive(
-                name = cpython_name,
+                name = cpython_name + "_build",
                 urls = [url_for_python(toolchain.version)],
                 build_file = build_file,
                 strip_prefix = "Python-" + toolchain.version,
             )
+
+            _toolchain_shim(
+                name = cpython_name,
+                cpython_build_name = cpython_name + "_build",
+            )
+
 
 
 _declare = tag_class(
