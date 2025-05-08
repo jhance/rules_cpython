@@ -22,6 +22,12 @@ register_toolchains(
 )
 ```
 
+There is a good chance that in the event of new releases of minor python versions,
+the specific python version you want might not be available. In this case, you can
+pass the integrity value manually in the `.declare()` extension.
+
+We also support passing a custom url for the download.
+
 ## Licenses
 
 Apache2.

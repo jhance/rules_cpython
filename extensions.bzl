@@ -71,6 +71,7 @@ def _cpython_toolchain(ctx):
                 urls = [url_for_python(toolchain.version)],
                 build_file = build_file,
                 strip_prefix = "Python-" + toolchain.version,
+                integrity = integrity,
             )
 
             _toolchain_shim(

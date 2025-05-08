@@ -181,7 +181,7 @@
   "moduleExtensions": {
     "//:extensions.bzl%cpython_toolchain": {
       "general": {
-        "bzlTransitiveDigest": "agSLmMVhch9oJrMjGFWX9UeONqMNZ4eMW/r8OoBaQwA=",
+        "bzlTransitiveDigest": "Ghj/rgXpZrJV/HxveDDJeXM7r3/RvFEycTVFXNE+r5g=",
         "usagesDigest": "9co22w2MWbX5IHxs6vv9CLw9+BsZO3/mg2sYdSqQ4XI=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -194,7 +194,8 @@
                 "https://www.python.org/ftp/python/3.12.10/Python-3.12.10.tgz"
               ],
               "build_file": "@@//:BUILD.cpython3_12",
-              "strip_prefix": "Python-3.12.10"
+              "strip_prefix": "Python-3.12.10",
+              "integrity": "sha256-FdnGI6v9IWX+gW6h+zhdbtjPPGZGYas1fxeC4wNqbaw="
             }
           },
           "cpython3_12": {
