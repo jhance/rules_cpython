@@ -1,0 +1,31 @@
+A hermetic rules_python toolchain for building cpython from source, statically linked.
+
+Based on the original implementation from https://github.com/dropbox/dbx_build_tools and
+tweaked so that it can also work with @rules_python instead of requiring internal dbx tools.
+
+You still need to use the original rules_python toolchain (or another one) in order to
+bootstrap the interpreter's zip files. This is controlled via a transition which swaps
+to the system interpreter for the construction of the py_binary that is used for zipping
+the stdlib.
+
+## Usage
+
+```console
+cpython = use_extension("@rules_cpython//:extensions.bzl", "cpython_toolchain")
+cpython.declare(version="3.12.10")
+use_repo(cpython, "cpython3_12")
+
+register_toolchains(
+    "@cpython3_12//:toolchain",
+    # if you want to be able to link c extensions
+    "@cpython3_12//:cc_toolchain",
+)
+```
+
+## Licenses
+
+Apache2.
+
+## Other
+
+This project has no affiliation with CPython.

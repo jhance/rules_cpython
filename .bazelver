@@ -1,0 +1,9 @@
+{
+    "pins": [
+        {
+            "channel": "stable",
+            "platform": "linux-x86_64",
+            "url": "https://github.com/bazelbuild/bazel/releases/download/8.2.1/bazel-8.2.1-linux-x86_64"
+        }
+    ]
+}
