@@ -9,6 +9,7 @@ py_runtime(
     files = [":runtime"],
     interpreter = ":bin/python",
     python_version = "PY3",
+    pyc_tag = "cpython-312",
 )
 
 py_runtime_pair(
