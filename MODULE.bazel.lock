@@ -181,7 +181,7 @@
   "moduleExtensions": {
     "//:extensions.bzl%cpython_toolchain": {
       "general": {
-        "bzlTransitiveDigest": "MEBpD4rUz0tcQ9oEiDlTKy6lMDY83A9cVStL2T28yVo=",
+        "bzlTransitiveDigest": "agSLmMVhch9oJrMjGFWX9UeONqMNZ4eMW/r8OoBaQwA=",
         "usagesDigest": "9co22w2MWbX5IHxs6vv9CLw9+BsZO3/mg2sYdSqQ4XI=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},

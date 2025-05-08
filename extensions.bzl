@@ -1,5 +1,5 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
+load("//:integrity.bzl", "known_integrity")
 
 def url_for_python(version):
     return "https://www.python.org/ftp/python/{version}/Python-{version}.tgz".format(version=version)
@@ -52,6 +52,20 @@ def _cpython_toolchain(ctx):
             cpython_name = repository_name_for_python_version(toolchain.version)
             build_file = "BUILD." + cpython_name
 
+            if toolchain.url:
+                url = toolchain.url
+            else:
+                url = url_for_python(toolchain.version)
+
+            if toolchain.integrity:
+                integrity = toolchain.integrity
+            else:
+                if toolchain.version not in known_integrity:
+                    fail("rules_cpython does not have the integrity for python version {}. You must specify it manually.".format(
+                        toolchain.version
+                    ))
+                integrity = known_integrity[toolchain.version]
+
             http_archive(
                 name = cpython_name + "_build",
                 urls = [url_for_python(toolchain.version)],
@@ -68,8 +82,9 @@ def _cpython_toolchain(ctx):
 
 _declare = tag_class(
     attrs = {
-        "version": attr.string(),
-        "integrity": attr.string(),
+        "version": attr.string(mandatory=True),
+        "url": attr.string(mandatory=False),
+        "integrity": attr.string(mandatory=False),
     },
 )
 
