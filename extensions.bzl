@@ -21,14 +21,14 @@ toolchain(
     name = "toolchain",
     toolchain = "@{cpython_build_name}//:py_runtime_pair",
     toolchain_type = "@rules_python//python:toolchain_type",
-    target_settings = ["@rules_cpython//:bootstrap_disabled"],
+    target_settings = ["@toolchains_cpython//:bootstrap_disabled"],
 )
 
 toolchain(
     name = "cc_toolchain",
     toolchain = "@{cpython_build_name}//:py_cc_toolchain",
     toolchain_type = "@rules_python//python/cc:toolchain_type",
-    target_settings = ["@rules_cpython//:bootstrap_disabled"],
+    target_settings = ["@toolchains_cpython//:bootstrap_disabled"],
 )
 """.format(cpython_build_name=ctx.attr.cpython_build_name)
 
@@ -61,7 +61,7 @@ def _cpython_toolchain(ctx):
                 integrity = toolchain.integrity
             else:
                 if toolchain.version not in known_integrity:
-                    fail("rules_cpython does not have the integrity for python version {}. You must specify it manually.".format(
+                    fail("toolchains_cpython does not have the integrity for python version {}. You must specify it manually.".format(
                         toolchain.version
                     ))
                 integrity = known_integrity[toolchain.version]

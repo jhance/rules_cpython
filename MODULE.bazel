@@ -1,5 +1,5 @@
 module(
-    name = "rules_cpython",
+    name = "toolchains_cpython",
     version = "0.1.0",
     compatibility_level = 0,
 )
@@ -19,7 +19,7 @@ bazel_dep(name = "libffi", version = "3.4.7.bcr.3")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "ncurses", version = "6.4.20221231.bcr.8")
 
-cpython = use_extension("@rules_cpython//:extensions.bzl", "cpython_toolchain", dev_dependency = True)
+cpython = use_extension("@toolchains_cpython//:extensions.bzl", "cpython_toolchain", dev_dependency = True)
 cpython.declare(version="3.12.10")
 use_repo(cpython, "cpython3_12")
 

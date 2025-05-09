@@ -1,5 +1,5 @@
 # Necessary to be public visibility for generated cpython repos.
-# Do not use outside of rules_cpython internal usage.
+# Do not use outside of toolchains_cpython internal usage.
 package(default_visibility = ["//visibility:public"])
 
 load("//support:utils.bzl", "bootstrap_py_binary")

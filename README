@@ -11,7 +11,7 @@ the stdlib.
 ## Usage
 
 ```console
-cpython = use_extension("@rules_cpython//:extensions.bzl", "cpython_toolchain")
+cpython = use_extension("@toolchains_cpython//:extensions.bzl", "cpython_toolchain")
 cpython.declare(version="3.12.10")
 use_repo(cpython, "cpython3_12")
 

@@ -1,12 +1,12 @@
 load("@rules_python//python:defs.bzl", "py_binary")
 
 def transition_to_bootstrap_impl(settings, attr):
-    return {"@rules_cpython//:cpython_bootstrap": True}
+    return {"@toolchains_cpython//:cpython_bootstrap": True}
 
 transition_to_bootstrap = transition(
     implementation = transition_to_bootstrap_impl,
     inputs = [],
-    outputs = ["@rules_cpython//:cpython_bootstrap"],
+    outputs = ["@toolchains_cpython//:cpython_bootstrap"],
 )
 
 def symlink_to_bootstrap_impl(ctx):

@@ -2,7 +2,7 @@ load("@rules_pkg//:pkg.bzl", "pkg_tar")
 load("@rules_python//python:py_runtime.bzl", "py_runtime")
 load("@rules_python//python:py_runtime_pair.bzl", "py_runtime_pair")
 load("@rules_python//python/cc:py_cc_toolchain.bzl", "py_cc_toolchain")
-load("@rules_cpython//support:utils.bzl", "external_prefix")
+load("@toolchains_cpython//support:utils.bzl", "external_prefix")
 
 py_runtime(
     name = "py_runtime",
@@ -315,6 +315,7 @@ cc_library(
     name = "headers",
     hdrs = PYTHON_HEADERS,
     visibility = ["//visibility:public"],
+    strip_include_prefix = "Include",
 )
 
 # All of the builtin extensions that we need from the Modules/ directory.
@@ -821,7 +822,7 @@ cc_binary(
         ":builtin_extensions",
         ":expat",
         ":headers",
-        "@rules_cpython//support:buildinfo",
+        "@toolchains_cpython//support:buildinfo",
         ":symbols.lds",
     ],
 )
@@ -1418,8 +1419,8 @@ genrule(
         ":sysconfigdata",
     ],
     outs = ["test-stdlib.zip"],
-    cmd = "$(location @rules_cpython//support:zip-stdlib) sloppy $@ $(SRCS)",
-    tools = ["@rules_cpython//support:zip-stdlib"],
+    cmd = "$(location @toolchains_cpython//support:zip-stdlib) sloppy $@ $(SRCS)",
+    tools = ["@toolchains_cpython//support:zip-stdlib"],
 )
 
 filegroup(
@@ -1454,18 +1455,18 @@ mkdir $(@D)/python3.12
 touch $(@D)/python3.12/os.py
 mkdir $(@D)/python3.12/lib-dynload
 # First, create an initial stdlib zip with the system Python.
-$(location @rules_cpython//support:zip-stdlib) sloppy $@ $(locations :production-stdlib)
+$(location @toolchains_cpython//support:zip-stdlib) sloppy $@ $(locations :production-stdlib)
 # Then do the final zip with our python using the temporary stdlib.
 cp $(location :bin/python) $(location :bin/python)-prime
 mkdir -p tmp/Lib/lib2to3
-gram=$$($(location :bin/python)-prime $(location @rules_cpython//support:gen_2to3_grammar.py) $(location Lib/lib2to3/Grammar.txt))
-patgram=$$($(location :bin/python)-prime $(location @rules_cpython//support:gen_2to3_grammar.py) $(location Lib/lib2to3/PatternGrammar.txt))
-$(location :bin/python)-prime $(location @rules_cpython//support:zip_stdlib.py) final $@ $(locations :production-stdlib) $$gram $$patgram
+gram=$$($(location :bin/python)-prime $(location @toolchains_cpython//support:gen_2to3_grammar.py) $(location Lib/lib2to3/Grammar.txt))
+patgram=$$($(location :bin/python)-prime $(location @toolchains_cpython//support:gen_2to3_grammar.py) $(location Lib/lib2to3/PatternGrammar.txt))
+$(location :bin/python)-prime $(location @toolchains_cpython//support:zip_stdlib.py) final $@ $(locations :production-stdlib) $$gram $$patgram
 """,
     tools = [
-        "@rules_cpython//support:gen_2to3_grammar.py",
-        "@rules_cpython//support:zip-stdlib",
-        "@rules_cpython//support:zip_stdlib.py",
+        "@toolchains_cpython//support:gen_2to3_grammar.py",
+        "@toolchains_cpython//support:zip-stdlib",
+        "@toolchains_cpython//support:zip_stdlib.py",
     ],
 )
 
